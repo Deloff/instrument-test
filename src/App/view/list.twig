@@ -1,0 +1,88 @@
+<div class="header">
+    <h2>Расписание поездок</h2>
+</div>
+<div class="container mb-2">
+    <div class="row">
+        <div class="col-12 mb-2">
+            <a href="/addTrip" class="btn btn-primary" id="addTripLink" data-toggle="modal" data-target="#myModal">Добавить
+                поездку</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <form name="searchTrip">
+                <label class="sr-only" for="sent_from">С</label>
+                <input type="text" name="sent_from" placeholder="{{ "now"|date("d.m.Y H:i") }}"
+                       {% if sent_from != '' %}value="{{ sent_from }}"{% endif %}/>
+                <label class="sr-only" for="sent_to">по</label>
+                <input type="text" name="sent_to" placeholder="{{ "now"|date("d.m.Y H:i") }}" {% if sent_to != '' %}value="{{ sent_to }}"{% endif %}/>
+                <button type="submit" class="btn btn-primary">Найти</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table border="1" width="100%">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Регион</th>
+                    <th>Курьер</th>
+                    <th>Дата выезда</th>
+                    <th>Дата прибытия</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if data|length > 0 %}
+                    {% for trip in data %}
+                        <tr>
+                            <td>{{ trip.id }}</td>
+                            <td>{{ trip.region_name }}</td>
+                            <td>{{ trip.last_name }} {{ trip.first_name }} {{ trip.middle_name }}</td>
+                            <td>{{ trip.sent_date_time|date("d.m.Y H:i:s") }}</td>
+                            <td>{{ trip.return_date_time|date("d.m.Y H:i:s") }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                {% if data|length == 0 %}
+                    <tr>
+                        <td colspan="5" align="center">
+                            Нет поездок
+                        </td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+            <br/>
+            {% if pages > 0 %}
+                {% for i in 1..pages %}
+                    {% if page == i %}{{ i }}&nbsp;{% endif %}
+                    {% if page != i %}
+                        <a href="./?page={{ i }}{% if sent_to != '' %}&sent_to={{ sent_to }}{% endif %}{% if sent_from != '' %}&sent_from={{ sent_from }}{% endif %}">{{ i }}</a>&nbsp;
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" name="save">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

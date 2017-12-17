@@ -1,0 +1,26 @@
+<form method="POST" action="/addTrip" name="addTrip">
+    <div class="form-group">
+        <label for="region">Регион</label>
+        <select class="form-control" name="region">
+            {% for region in regions %}
+                <option value="{{ region.id }}">{{ region.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="sent_date_time">Дата выезда из Москвы</label>
+        <input type="text" name="sent_date_time" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label for="courier">ФИО курьера</label>
+        <select class="form-control" name="courier">
+            {#{% for courier in couriers %}#}
+                {#<option value="{{ courier.id }}">{{ courier.lastName }} {{ courier.firstName }} {{ courier.middleName }}</option>#}
+            {#{% endfor %}#}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="return_date">Дата прибытия в регион</label>
+        <p id="return_date"></p>
+    </div>
+</form>
