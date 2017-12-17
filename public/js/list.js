@@ -84,12 +84,26 @@ $(function(){
         locale: 'ru',
         format:'d.m.Y H:i',
         lang:'ru',
-        minDate: now.getFullYear()+ '/'+now.getDate() + '/'+now.getMonth(),
+        onShow:function( ct ){
+            var val = $('input[name="sent_to"]').val();
+            var values = val.toString().split(' ');
+            var date = values[0].split('.');
+            this.setOptions({
+                maxDate:val?(date[2]+'/'+date[0] + '/' + date[1]):false
+            })
+        }
     });
     $('input[name="sent_to"]').datetimepicker({
         locale: 'ru',
         format:'d.m.Y H:i',
         lang:'ru',
-        minDate: now.getFullYear()+ '/'+now.getDate() + '/'+now.getMonth(),
+        onShow:function( ct ){
+            var val = $('input[name="sent_from"]').val();
+            var values = val.toString().split(' ');
+            var date = values[0].split('.');
+            this.setOptions({
+                minDate:val? (date[2]+'/'+date[0] + '/' + date[1]):false
+            })
+        }
     });
 });

@@ -74,14 +74,14 @@ class ListAction implements MiddlewareInterface
         $sentTo = $sentTo instanceof \DateTime ? $sentTo : null;
         $tripService = $this->getTripService();
         $counter = $tripService->getCount($sentFrom, $sentTo);
-        $data = $tripService->getList($sentFrom, $sentTo, $onPage, ($page-1)*$onPage);
+        $data = $tripService->getList($sentFrom, $sentTo, $onPage, ($page - 1) * $onPage);
         $value = $this->getTwig()
             ->render('list.twig', [
                 'data' => $data,
-                'pages' => ceil($counter/$onPage),
+                'pages' => ceil($counter / $onPage),
                 'page' => $page,
                 'sent_from' => $sentFrom ? $sentFrom->format('d.m.Y H:i') : '',
-                'sent_to' => $sentTo ? $sentTo->format('d.m.Y H:i'): ''
+                'sent_to' => $sentTo ? $sentTo->format('d.m.Y H:i') : ''
             ]);
         return new HtmlResponse($value);
     }
